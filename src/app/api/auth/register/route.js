@@ -45,11 +45,12 @@ const generateToken = (user) => {
 // POST API route
 export async function POST(req) {
 
-  const headers = cors(req); // Get CORS headers
+  // Handle CORS
+  const corsHeaders = cors(req);
 
-  // Handle CORS preflight
-  if (headers.status === 200) {
-    return new Response(null, { status: 200, headers }); // Return early for OPTIONS request
+  // If it's an OPTIONS request, return early
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { status: 204, headers: corsHeaders });
   }
 
   return new Promise(async (resolve, reject) => {
@@ -122,7 +123,7 @@ export async function POST(req) {
         return resolve(
           new Response(
             JSON.stringify({ message: "User registered successfully", token }),
-            { status: 201, headers: { "Content-Type": "application/json" } }
+            { status: 201, headers: {...corsHeaders, "Content-Type": "application/json" } }
           )
         );
       } catch (error) {
@@ -130,6 +131,7 @@ export async function POST(req) {
         return resolve(
           new Response(JSON.stringify({ error: "Registration failed" }), {
             status: 500,
+            headers: corsHeaders,
           })
         );
       }

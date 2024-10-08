@@ -86,7 +86,6 @@ const RegisterForm = () => {
   // running on onchange of input fields
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    console.log("=====files====>", files);
     setFormData((prevState) => ({
       ...prevState,
       [name]: files ? files[0] : value,
@@ -136,7 +135,7 @@ const RegisterForm = () => {
         }
       } catch (error) {
         console.error('Error during registration:', error);
-        toast.error(error, { position: "top-right" });
+        toast.error("Registration failed", { position: "top-right" });
         setMessage('An error occurred during registration. Please try again.');
       }
     } else {
