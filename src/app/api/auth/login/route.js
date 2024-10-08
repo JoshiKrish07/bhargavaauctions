@@ -1,6 +1,7 @@
 import mysql from "mysql2/promise";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import cors from "@/lib/cors";
 
 // Create a MySQL connection pool (reuse the same pool configuration as in registration logic)
 const pool = mysql.createPool({
@@ -13,7 +14,7 @@ const pool = mysql.createPool({
 // Token generation function (reuse the same one from the registration logic)
 const generateToken = (user) => {
   return jwt.sign(
-    { id: user.id, username: user.name },
+    { id: user.id, useremail: user.email },
     process.env.JWT_LOGIN_KEY,
     { expiresIn: "5m" }
   );
@@ -21,12 +22,19 @@ const generateToken = (user) => {
 
 // Login logic
 export async function POST(req) {
+  const headers = cors(req); // Get CORS headers
+
+  // Handle CORS preflight
+  if (headers.status === 200) {
+    return new Response(null, { status: 200, headers }); // Return early for OPTIONS request
+  }
+
   return new Promise(async (resolve, reject) => {
+    console.log("check environment===>", process.env.NODE_ENV);
     try {
       const formData = await req.formData();
       const email = formData.get("email");
       const password = formData.get("password");
-
       // Check if the user exists in the database
       const [user] = await pool.execute(
         "SELECT * FROM register WHERE email = ?",

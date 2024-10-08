@@ -70,9 +70,7 @@ const Header = () => {
     const storedToken = localStorage.getItem("token");
     if (storedToken) {
       dispatch({ type: "SET_TOKEN", payload: storedToken });
-    } else {
-      router.push('/login'); // Redirect to the Login page
-    }
+    } 
   }, []);
   return (
     <div className="header-topbar-area">

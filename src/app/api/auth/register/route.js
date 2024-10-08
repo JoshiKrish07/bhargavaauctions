@@ -4,6 +4,7 @@ import multer from "multer";
 import fs from "fs";
 import path from "path";
 import bcrypt from "bcrypt";
+import cors from "@/lib/cors";
 
 // Create the uploads directory path
 const uploadsDir = path.join(process.cwd(), "uploads");
@@ -35,7 +36,7 @@ const pool = mysql.createPool({
 // Token generation
 const generateToken = (user) => {
   return jwt.sign(
-    { id: user.id, username: user.name },
+    { id: user.id, useremail: user.email },
     process.env.JWT_REGISTER_KEY,
     { expiresIn: "1h" }
   );
@@ -43,6 +44,14 @@ const generateToken = (user) => {
 
 // POST API route
 export async function POST(req) {
+
+  const headers = cors(req); // Get CORS headers
+
+  // Handle CORS preflight
+  if (headers.status === 200) {
+    return new Response(null, { status: 200, headers }); // Return early for OPTIONS request
+  }
+
   return new Promise(async (resolve, reject) => {
     // Use multer to handle only the file upload
     upload.single("profilePic")(req, {}, async (error) => {
