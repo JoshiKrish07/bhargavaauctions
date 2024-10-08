@@ -16,6 +16,8 @@ import useWow from "@/customHooks/useWow";
 import Head from "next/head";
 import { dmsans, playfair_display } from "@/fonts/font";
 import Meta from "@/components/common/Meta";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function RootLayout({ children }) {
   // useHoverEffect(".btn-hover");
@@ -41,7 +43,7 @@ export default function RootLayout({ children }) {
         <title>Bhargava Auctions</title>
       </head>
       <body>
-        {children} <ScrollTopBtn />
+        {children} <ScrollTopBtn /> <ToastContainer />
       </body>
     </html>
   );

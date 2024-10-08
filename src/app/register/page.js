@@ -12,7 +12,7 @@ export const metadata = {
   },
 };
 const RegisterPage = () => {
-
+  
   return (
     <>
       {/* <InnerPageHeader1 /> */}

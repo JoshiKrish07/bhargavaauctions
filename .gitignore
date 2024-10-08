@@ -3,3 +3,7 @@ node_modules
 
 # Ignore .next (Next.js build output)
 .next
+
+# Environment variable files
+.env.local
+.env.production

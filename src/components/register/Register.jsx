@@ -1,8 +1,11 @@
 "use client";
 import { useState } from 'react';
 import './Register.css';
+import { useRouter } from "next/navigation";
+import { toast } from 'react-toastify';
 
 const RegisterForm = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,7 +19,7 @@ const RegisterForm = () => {
   });
 
   const [errors, setErrors] = useState({});
-
+  const [message, setMessage] = useState('');
   const validate = () => {
     let formErrors = {};
 
@@ -83,6 +86,7 @@ const RegisterForm = () => {
   // running on onchange of input fields
   const handleChange = (e) => {
     const { name, value, files } = e.target;
+    console.log("=====files====>", files);
     setFormData((prevState) => ({
       ...prevState,
       [name]: files ? files[0] : value,
@@ -94,10 +98,47 @@ const RegisterForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      console.log("Form submitted successfully:", formData);
+      try {
+        const formDataToSend = new FormData();
+        Object.keys(formData).forEach(key => {
+          formDataToSend.append(key, formData[key]);
+        });
+
+        const response = await fetch('/api/auth/register', {
+          method: 'POST',
+          body: formDataToSend,
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setMessage(data.message);
+          setFormData({
+            name: '',
+            email: '',
+            password: '',
+            mobile: '',
+            address: '',
+            state: '',
+            pincode: '',
+            profilePic: null,
+            handlename: ''
+          });
+          setErrors({});
+          toast.success("Register Successsfully", { position: "top-right" });
+          router.push('/login'); // Redirect to the login page
+        } else {
+          toast.error(data.error, { position: "top-right" });
+          setMessage(data.error);
+        }
+      } catch (error) {
+        console.error('Error during registration:', error);
+        toast.error(error, { position: "top-right" });
+        setMessage('An error occurred during registration. Please try again.');
+      }
     } else {
       console.log("Form validation failed");
     }
