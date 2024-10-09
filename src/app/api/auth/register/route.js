@@ -6,11 +6,15 @@ import path from "path";
 import bcrypt from "bcrypt";
 import cors from "@/lib/cors";
 import uploadImgToCloudinary from "@/lib/cloudinary";
+// export const config = {
+//   api: {
+//     bodyParser: false,    // disable next js body parsing
+//   },
+// }
+
 export const config = {
-  api: {
-    bodyParser: false,    // disable next js body parsing
-  },
-}
+  runtime: 'nodejs', // Or 'experimental-edge' if you're using Edge functions
+};
 
 // Create the uploads directory path
 const uploadsDir = path.join(process.cwd(), "profileiamge");
