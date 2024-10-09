@@ -3,6 +3,7 @@ import { useState } from 'react';
 import './Register.css';
 import { useRouter } from "next/navigation";
 import { toast } from 'react-toastify';
+import Loader from '../loader/Loader';
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -20,6 +21,7 @@ const RegisterForm = () => {
 
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false); // Loader state
   const validate = () => {
     let formErrors = {};
 
@@ -70,15 +72,19 @@ const RegisterForm = () => {
       formErrors.pincode = "*Pincode should be 6 digits";
     }
 
+    let imageReg = /(\.jpg|\.jpeg|\.bmp|\.gif|\.png)$/i;
+    console.log("===formData.profilePic===>", formData.profilePic);
     // Profile pic validation 
-    // if (!formData.profilePic) {
-    //   formErrors.profilePic = "*Profile picture is required";
-    // }
+    if (!formData.profilePic) {
+      formErrors.profilePic = "*Profile picture is required";
+    } else if(!imageReg.exec(formData.profilePic.name)){
+      formErrors.profilePic = "*Only Images allowed";
+    }
 
     if (!formData.handlename.trim()) {
         formErrors.handlename = "*Handle Name is required";
     }
-
+    console.log("=====fromErrors====>", formErrors)
     setErrors(formErrors);
     return Object.keys(formErrors).length === 0;
   };
@@ -100,6 +106,7 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
+      setLoading(true);
       try {
         const formDataToSend = new FormData();
         Object.keys(formData).forEach(key => {
@@ -137,6 +144,8 @@ const RegisterForm = () => {
         console.error('Error during registration:', error);
         toast.error("Registration failed", { position: "top-right" });
         setMessage('An error occurred during registration. Please try again.');
+      } finally {
+        setLoading(false);    // stop loader
       }
     } else {
       console.log("Form validation failed");
@@ -241,7 +250,7 @@ const RegisterForm = () => {
             name="profilePic"
             onChange={handleChange}
           />
-          {/* {errors.profilePic && <p className="error">{errors.profilePic}</p>} */}
+          {errors.profilePic && <p className="error">{errors.profilePic}</p>} 
         </div>
 
         <div className="form-group">
@@ -257,6 +266,7 @@ const RegisterForm = () => {
         </div>
 
         <button type="submit" className="submit-btn">Register</button>
+        <Loader isLoading={loading} />
       </form>
     </div>
   );

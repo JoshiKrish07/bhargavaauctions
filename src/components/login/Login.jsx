@@ -4,6 +4,7 @@ import "./Login.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from 'react-toastify';
+import Loader from "../loader/Loader";
 
 const Login = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ const Login = () => {
   });
 
   const [errors, setErrors] = useState({});
-
+  const [loading, setLoading] = useState(false);
   const validate = () => {
     let formErrors = {};
 
@@ -57,7 +58,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      
+      setLoading(true);
       try {
           const formDataToSend = new FormData();
           Object.keys(formData).forEach(key => {
@@ -85,9 +86,13 @@ const Login = () => {
           router.push('/'); // Redirect to the Home page
         }
       } catch (error) {
+        
         console.error("Error during login:", error);
         toast.error(error, { position: "top-right" });
         setErrors({ general: "An error occurred. Please try again." });
+
+      } finally {
+        setLoading(false);
       }
       
     } else {
@@ -125,6 +130,7 @@ const Login = () => {
         <button type="submit" className="submit-btn">
           Login
         </button>
+        <Loader isLoading={loading} />
       </form>
       <div className="no-account">
         <p>
