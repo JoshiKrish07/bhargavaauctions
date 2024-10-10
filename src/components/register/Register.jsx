@@ -25,7 +25,7 @@ const RegisterForm = () => {
   const validate = () => {
     let formErrors = {};
 
-    // Name validation (Required)
+    // Name validation
     if (!formData.name.trim()) {
       formErrors.name = "*Name is required";
     }
@@ -72,9 +72,8 @@ const RegisterForm = () => {
       formErrors.pincode = "*Pincode should be 6 digits";
     }
 
-    let imageReg = /(\.jpg|\.jpeg|\.bmp|\.gif|\.png)$/i;
-    console.log("===formData.profilePic===>", formData.profilePic);
     // Profile pic validation 
+    let imageReg = /(\.jpg|\.jpeg|\.bmp|\.gif|\.png)$/i;
     if (!formData.profilePic) {
       formErrors.profilePic = "*Profile picture is required";
     } else if(!imageReg.exec(formData.profilePic.name)){
