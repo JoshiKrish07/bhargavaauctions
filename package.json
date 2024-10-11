@@ -11,6 +11,7 @@
     "dependencies": {
         "@emotion/styled": "^11.13.0",
         "@mui/icons-material": "^5.16.6",
+        "@reduxjs/toolkit": "^2.2.8",
         "bcrypt": "^5.1.1",
         "cloudinary": "^2.5.1",
         "cors": "^2.8.5",
@@ -25,6 +26,7 @@
         "react-fast-marquee": "^1.6.5",
         "react-loader-spinner": "^6.1.6",
         "react-modal-video": "^2.0.2",
+        "react-redux": "^9.1.2",
         "react-toastify": "^10.0.5",
         "swiper": "^8.4.5",
         "wowjs": "^1.1.3",

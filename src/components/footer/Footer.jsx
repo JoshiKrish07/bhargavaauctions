@@ -45,7 +45,7 @@ const Footer = () => {
           <div className="container">
             <div className="footer-menu-wrap">
               <div className="row g-lg-4 gy-5">
-                <div className="col-lg-2 col-sm-6">
+                {/* <div className="col-lg-2 col-sm-6">
                   <div className="footer-widget">
                     <div className="widget-title">
                       <h4>Category</h4>
@@ -62,7 +62,7 @@ const Footer = () => {
                       </ul>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="col-lg-2 col-sm-6">
                   <div className="footer-widget">
                     <div className="widget-title">
@@ -79,11 +79,11 @@ const Footer = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-4 col-sm-6 d-flex align-items-center justify-content-lg-center justify-content-start">
+                <div className="col-lg-4 col-sm-12 d-flex align-items-center justify-content-lg-center justify-content-start">
                   <div className="footer-logo-area">
-                    <div className="footer-logo">
-                      <img src="assets/img/footer-logo.svg" alt="" />
-                    </div>
+                    {/* <div className="footer-logo">
+                      <img src="assets/img/bh-auction-logo.jpeg" alt="" height="74px" width="90px"/>
+                    </div> */}
                     <div className="social-area">
                       <h5>Social Just You Connected Us!</h5>
                       <p>All of update in social</p>
@@ -116,7 +116,7 @@ const Footer = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-4 col-sm-6 d-flex justify-content-sm-end justify-content-start">
+                {/* <div className="col-lg-4 col-sm-6 d-flex justify-content-sm-end justify-content-start">
                   <div className="newletter-and-payment-wrap">
                     <div className="newletter-area">
                       <h4>Join Our Newsletter &amp; More information.</h4>
@@ -137,18 +137,21 @@ const Footer = () => {
                       </ul>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="footer-bottom">
               <div className="copyright-area">
-                <p>©Copyright 2024 <Link href="/">Probid</Link> | Design By <a href="https://www.egenslab.com/">Egens Lab</a></p>
+                <p>©Copyright 2024 <Link href="/">Bhargava Auctions</Link></p>
               </div>
               <div className="footer-bottom-right">
                 <ul>
-                  <li><Link href="/support-center">Support Center</Link></li>
+                  {/* <li><Link href="/support-center">Support Center</Link></li>
                   <li><Link href="/terms-condition">Terms &amp; Conditions</Link></li>
-                  <li><Link href="/privacy-policy">Privacy Policy</Link></li>
+                  <li><Link href="/privacy-policy">Privacy Policy</Link></li> */}
+                  <li><Link href="#">Support Center</Link></li>
+                  <li><Link href="#">Terms &amp; Conditions</Link></li>
+                  <li><Link href="#">Privacy Policy</Link></li>
                 </ul>
               </div>
             </div>

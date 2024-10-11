@@ -1,16 +1,19 @@
 import Breadcrumb1 from "@/components/common/Breadcrumb1";
 import Footer from "@/components/footer/Footer";
+import Header from "@/components/header/Header";
 import InnerPageHeader1 from "@/components/header/InnerPageHeader1";
 import React from "react";
 export const metadata = {
   icons: {
-    icon: "/assets/img/fav-icon.svg",
+    // icon: "/assets/img/fav-icon.svg",
+    icon: "/assets/img/bh-auction-logo.jpeg",
   },
 };
 const ContactPage = () => {
   return (
     <>
-      <InnerPageHeader1 />
+      {/* <InnerPageHeader1 /> */}
+      <Header />
       <Breadcrumb1 pagetitle={"Contact us"} currentPage={"Contact us"} />
       <div className="contact-page pt-110 mb-110">
         <div className="container">
@@ -34,10 +37,10 @@ const ContactPage = () => {
                 </div>
                 <div className="content">
                   <h6>
-                    <a href="tel:">+990-737 621 432</a>
+                    <a href="tel:">+91-1234567890</a>
                   </h6>
                   <h6>
-                    <a href="tel:">+990-737 621 432</a>
+                    <a href="tel:">+91-9876543210</a>
                   </h6>
                 </div>
               </div>
@@ -57,10 +60,7 @@ const ContactPage = () => {
                 </div>
                 <div className="content">
                   <h6>
-                    <a href="mailto:info@example.com">info@example.com</a>
-                  </h6>
-                  <h6>
-                    <a href="mailto:example@example.com">example@example.com</a>
+                    <a href="mailto:info@bhargavaauctions.com">info@bhargavaauctions.com</a>
                   </h6>
                 </div>
               </div>
@@ -82,8 +82,7 @@ const ContactPage = () => {
                 <div className="content">
                   <h6>
                     <a href="#">
-                      168/170, Avenue 01, Old York Drive Rich Mirpur DOHS,
-                      Bangladesh
+                      India
                     </a>
                   </h6>
                 </div>
@@ -96,7 +95,7 @@ const ContactPage = () => {
                     <div className="col-md-12 mb-20">
                       <div className="form-inner">
                         <label>Name*</label>
-                        <input type="text" placeholder="Daniel Scoot" />
+                        <input type="text" placeholder="Your Name" />
                       </div>
                     </div>
                     <div className="col-md-6 mb-20">
@@ -108,7 +107,7 @@ const ContactPage = () => {
                     <div className="col-md-6 mb-20">
                       <div className="form-inner">
                         <label>Email</label>
-                        <input type="email" placeholder="info@example.com" />
+                        <input type="email" placeholder="your@email.com" />
                       </div>
                     </div>
                     <div className="col-md-12 mb-30">
@@ -135,14 +134,14 @@ const ContactPage = () => {
           </div>
         </div>
       </div>
-      <div className="contact-map">
+      {/* <div className="contact-map">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3649.5647631857846!2d90.36311167605992!3d23.83407118555764!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c14c8682a473%3A0xa6c74743d52adb88!2sEgens%20Lab!5e0!3m2!1sen!2sbd!4v1700138349574!5m2!1sen!2sbd"
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
         />
-      </div>
+      </div> */}
       <Footer />
     </>
   );

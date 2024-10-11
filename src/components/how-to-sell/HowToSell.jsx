@@ -139,7 +139,7 @@ const HowToSell = () => {
               </div>
             </div>
           </div>
-          <div className="video-tutorial-area">
+          {/* <div className="video-tutorial-area">
             <h2>Guidelines For Selling</h2>
             <div className="video-wrapper">
               <img
@@ -198,7 +198,7 @@ const HowToSell = () => {
                 onClose={() => setOpen(false)}
               />
             </React.Fragment>
-          </div>
+          </div> */}
         </div>
       </div>
         </>

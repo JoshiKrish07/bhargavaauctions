@@ -12,6 +12,7 @@ SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
 import AuctionCard from "../auction/auction-card";
 import { useEffect, useMemo, useState } from "react";
 import { useCountdownTimer } from "@/customHooks/useCountdownTimer";
+import Shimmer from "../shimmer-ui/Shimmer";
 
 const Home1LiveAuction = () => {
   // const { days, hours, minutes, seconds } = useCountdownTimer(
@@ -20,6 +21,7 @@ const Home1LiveAuction = () => {
 
   const [auctions, setAuctions] = useState([]);
   const [error, setError] = useState("");
+  const [lotData, setLotData] = useState([]);
 
   useEffect(() => {
     const fetchLiveAuctions = async () => {
@@ -34,6 +36,26 @@ const Home1LiveAuction = () => {
 
         const { data } = await response.json();
         console.log("=====data=====>", data);
+        if(data) {
+          const lotResponse = await fetch("/api/lot-details", {
+            method: "GET"
+          });
+
+          if (!lotResponse.ok) {
+            throw new Error("Failed to fetch lot details");
+          }
+
+          const { data } = await lotResponse.json();
+          let liveLots = [];
+          for(let lot in data) {
+            if(data[lot].lot_status === "UNSOLD") {
+              liveLots.push(data[lot])
+            }
+          }
+
+          console.log("======liveLots====>", liveLots);
+          setLotData(liveLots);
+        }
         setAuctions(data);
       } catch (error) {
         console.log(
@@ -145,10 +167,6 @@ const Home1LiveAuction = () => {
                 <h2>
                   Live <span>Auction</span>
                 </h2>
-                <p>
-                  Feel free adapt this based on the specific managed services,
-                  features
-                </p>
               </div>
               <div className="slider-btn-grp">
                 <div className="slider-btn auction-slider-prev">
@@ -183,17 +201,19 @@ const Home1LiveAuction = () => {
               <div className="col-lg-12">
                 <Swiper {...settings} className="swiper auction-slider">
                   <div className="swiper-wrapper">
-                    {auctions.map((auction) => {
+                    {lotData.length === 0 && <h2>Loading....</h2>}
+                    {/* {lotData.length === 0 && <Shimmer />} */}
+                    {lotData.map((lot) => {
                       return (
-                        <SwiperSlide key={auction.auct_id} className="swiper-slide">
+                        <SwiperSlide key={lot.lot_id} className="swiper-slide">
                           <div className="auction-card">
                             <div className="auction-card-img-wrap">
                               <Link
-                                href="/auction-details"
+                                href={`/auction-details/${lot.lot_id}`}
                                 className="card-img"
                               >
                                 <img
-                                  src={auction.image_address}
+                                  src={lot.lot_front_img}
                                   alt=""
                                 />
                               </Link>
@@ -240,10 +260,10 @@ const Home1LiveAuction = () => {
                                   </a>
                                 </li>
                               </ul>
-                              <div className="countdown-timer">
+                              {/* <div className="countdown-timer">
                                 <ul data-countdown="2024-10-23 12:00:00">
                                   <li className="times" data-days={0}>
-                                    {getTimeDifference(auction.created_date, auction.end_date, 'days')}
+                                    { getTimeDifference(auction.created_date, auction.end_date, 'days') }
                                     <span>Days</span>
                                   </li>
                                   <li className="colon">:</li>
@@ -262,21 +282,22 @@ const Home1LiveAuction = () => {
                                     <span>Sec</span>
                                   </li>
                                 </ul>
-                              </div>
+                              </div> */}
                             </div>
                             <div className="auction-card-content">
                               <h6>
-                                <Link href="/auction-details">
-                                  {auction.auctionname}
+                                <Link href={`/auction-details/${lot.lot_id}`}>
+                                  {/* {lot.lot_description} */}
+                                  {lot.lot_description.split("").slice(0, 100).join("")}...
                                 </Link>
                               </h6>
                               <div className="price-and-code-area">
                                 <div className="price">
                                   <span>Current Bid at:</span>
-                                  <strong>$2,898</strong>
+                                  <strong>₹ 100</strong>
                                 </div>
                                 <div className="code">
-                                  <span>Lot # 25896742</span>
+                                  <span>Lot # {lot.lot_code}</span>
                                 </div>
                               </div>
                               <div className="author-and-btn-area">
@@ -295,7 +316,7 @@ const Home1LiveAuction = () => {
                                   </div>
                                 </Link> */}
                                 <Link
-                                  href="/auction-details"
+                                  href={Boolean(localStorage.getItem('token')) ? `/auction-details/${lot.lot_id}` : '/login'}
                                   className="bid-btn"
                                 >
                                   Bid Now
